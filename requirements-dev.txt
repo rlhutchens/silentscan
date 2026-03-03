@@ -1,2 +1,5 @@
 setuptools
 pytest
+
+# Windows only — install manually on Windows
+# pip install winshell pywin32
