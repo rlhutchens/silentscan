@@ -41,12 +41,13 @@ DURATION = 2.0  # seconds — short enough to keep tests fast
 
 def _write_wav(path: Path, samples: list[int]) -> None:
     """Write a list of integer samples to a WAV file."""
-    with wave.open(str(path), 'w') as wf:
-        wf.setnchannels(1)  # mono
-        wf.setsampwidth(2)  # 16-bit
-        wf.setframerate(SAMPLE_RATE)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with wave.open(str(path), 'w') as f:
+        f.setnchannels(1)  # mono
+        f.setsampwidth(2)  # 16-bit
+        f.setframerate(SAMPLE_RATE)
         sample_data = struct.pack('<' + 'h' * len(samples), *samples)
-        wf.writeframes(sample_data)
+        f.writeframes(sample_data)
 
 def _silent_samples() -> list[int]:
     """Generate samples representing pure silence."""

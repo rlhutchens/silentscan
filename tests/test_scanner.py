@@ -37,7 +37,7 @@ class TestIsSilent:
         Confirms the threshold boundary is exclusive — files at or above
         the threshold are kept.
         """
-        assert not is_silent(near_silent_wav) is False
+        assert is_silent(near_silent_wav) is False
 
     def test_near_silent_wav_flagged_at_higher_threshold(self, near_silent_wav):
         """
