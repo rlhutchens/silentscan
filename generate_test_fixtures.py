@@ -10,7 +10,6 @@ Usage:
 """
 
 import argparse
-from os import path
 import struct
 import wave
 from pathlib import Path
@@ -29,14 +28,11 @@ def write_wav(path: Path, samples: list[int], sample_rate: int = 44100) -> None:
 
 def write_aiff(path: Path, samples: list[int], sample_rate: int = 44100) -> None:
     """Write a mono 16-bit AIFF file from a list of integer samples."""
-    import aifc
+    import numpy as np
+    import soundfile as sf
     path.parent.mkdir(parents=True, exist_ok=True)
-    with aifc.open(str(path), "w") as f:
-        f.setnchannels(1)  # mono
-        f.setsampwidth(2)  # 16-bit
-        f.setframerate(sample_rate)
-        for sample in samples:
-            f.writeframes(struct.pack(">h", sample))  # big-endian for AIFF
+    audio = np.array(samples, dtype=np.int16)
+    sf.write(str(path), audio, sample_rate, subtype="PCM_16", format="AIFF")
 
 def silent_samples(duration_seconds: float = 5.0, sample_rate: int = 44100) -> list[int]:
     """Generate samples representing pure silence."""
