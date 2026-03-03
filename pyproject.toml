@@ -20,3 +20,9 @@ silentscan = "silentscan.cli:cli"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["silentscan*"]
+
+[project.optional-dependencies]
+windows = [
+    "winshell",
+    "pywin32",
+]
